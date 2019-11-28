@@ -15,8 +15,8 @@ library(BiocManager)
 library(HTqPCR)
 library(nondetects)
 
-
-setwd("/media/nvakirlis/hd1/projects/PCaP1_paper/pcap_article_bpi/final_csv/")
+# replace with the home directory
+setwd("/media/nvakirlis/hd1/projects/PCaP1_paper/pcap_article_bpi/Beris_et_al_2019/")
 
 confirm_contrasts <- function(factors, plus, minus)
 {
@@ -1036,22 +1036,20 @@ df_s <- gather(df,
            VIGS_PVY_GFP,
            VIGS_PVY_RFP,
            TRV_PVY_GFP,
-           TRV_PVY_RFP,
-           PVY_GFP,
-           PVY_RFP)
+           TRV_PVY_RFP)
            
 wilcox.test(df$VIGS_PVY_GFP, df$TRV_PVY_GFP)
 t.test(df$VIGS_PVY_GFP, df$TRV_PVY_GFP, paired=FALSE)
 ks.test(df$VIGS_PVY_GFP, df$TRV_PVY_GFP)
            
 
-df_s$type <- factor(df_s$type, levels = c("VIGS_PVY_GFP", "TRV_PVY_GFP", "PVY_GFP", "VIGS_PVY_RFP", "TRV_PVY_RFP", "PVY_RFP"), ordered=TRUE)
+df_s$type <- factor(df_s$type, levels = c("VIGS_PVY_GFP", "TRV_PVY_GFP", "VIGS_PVY_RFP", "TRV_PVY_RFP"), ordered=TRUE)
 
 pl <- ggplot() +
 		geom_boxplot(data = df_s, aes(y=measurement, x=type, fill=type, colour=type), width=0.8, alpha=0.3, outlier.shape=NA) +
 		geom_jitter(data = df_s, aes(y=measurement, x=type, colour=type), width=0.3) +
-		scale_fill_manual(values=c("darkgreen","darkgreen","darkgreen","red","red","red")) +
-		scale_colour_manual(values=c("darkgreen","darkgreen","darkgreen","red","red","red")) +
+		scale_fill_manual(values=c("darkgreen","darkgreen","red","red")) +
+		scale_colour_manual(values=c("darkgreen","darkgreen","red","red")) +
 		theme_bw() + 
 		theme(legend.position="None") +
 		xlab("")
